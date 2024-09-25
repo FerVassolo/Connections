@@ -1,0 +1,1 @@
+Implementar Room a la history.

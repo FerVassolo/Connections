@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Connections</string>
+    <string name="creator">By Fer</string>
+    <string name="play_button">Play</string>
+    <string name="instruction">Create four groups of four!</string>
+    <string name="retry">Retry</string>
+    <string name="retry_load_ranking">Can\'t load ranking, try again later</string>
+    <string name="cant_load_words">Can\'t get words</string>
+
+    <string name="set_user_name">Set your user name</string>
+    <string name="save">Save</string>
+    <string name="greetings">Hello, </string>
+</resources>
