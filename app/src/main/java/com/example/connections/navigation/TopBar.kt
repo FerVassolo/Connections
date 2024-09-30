@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.connections.R
 import com.example.connections.ui.theme.gray
+import com.example.connections.ui.theme.subtitle
 
 
 val boxModifier = Modifier
@@ -82,7 +83,7 @@ fun TopBar(
                 if(userName.isNotEmpty()){
                     Text(
                         text = stringResource(id = R.string.greetings) + " " + userName.capitalize(),
-                        fontSize = 20.sp,
+                        fontSize = subtitle,
                         modifier = Modifier
                             .wrapContentHeight()
                     )

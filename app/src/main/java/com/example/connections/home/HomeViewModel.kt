@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
     val userName = _userName.asStateFlow()
 
     init {
-        // resetDataStore() // ONLY FOR DEVELOPING PURPOSES, DON'T SHOW ON THE EXAM
+        resetDataStore() // ONLY FOR DEVELOPING PURPOSES, DON'T SHOW ON THE EXAM
         getNameFromDataStore()
     }
 

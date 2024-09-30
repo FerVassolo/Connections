@@ -51,7 +51,10 @@ import com.example.connections.ui.theme.PurpleGrey80
 import com.example.connections.ui.theme.White
 import com.example.connections.ui.theme.darkGray
 import com.example.connections.ui.theme.darkGreen
+import com.example.connections.ui.theme.increasedWordButton
 import com.example.connections.ui.theme.lightGreen
+import com.example.connections.ui.theme.subtitle
+import com.example.connections.ui.theme.wordButton
 
 
 // IF the Id is -1, then we are getting the last one.
@@ -206,12 +209,12 @@ fun WordButton(text: String, isSelected: Boolean, onWordClicked: (String) -> Uni
         if(text.length > 7) {
             Text(text = text,
                 color =  if (isSelected) Color.White else Color.Black,
-                fontSize = (22 - text.length).sp,
+                fontSize = (increasedWordButton - text.length).sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis)
         } else
-        Text(text = text, fontSize = 16.sp,
+        Text(text = text, fontSize = wordButton,
             color =  if (isSelected) Color.White else Color.Black,
             fontWeight = FontWeight.Bold,)
     }
@@ -228,7 +231,7 @@ fun Instructions(){
     ) {
         Text(
             text = stringResource(id = R.string.instruction),
-            fontSize = 20.sp,
+            fontSize = subtitle,
         )
     }
 }
@@ -308,7 +311,7 @@ fun MatchedCategoriesBar(matchedCategories: List<String>) {
                     modifier = Modifier.padding(16.dp),
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    fontSize = subtitle
                 )
             }
         }

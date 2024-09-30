@@ -1,6 +1,7 @@
 package com.example.connections.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,12 +27,15 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.connections.R
 import com.example.connections.common.SimpleBtnComposable
 import com.example.connections.common.SimpleButton
-import com.example.connections.ui.theme.Pink40
+import com.example.connections.ui.theme.h1
+import com.example.connections.ui.theme.h2
+import com.example.connections.ui.theme.textFieldPadding
+import com.example.connections.ui.theme.screenPadding
+import com.example.connections.ui.theme.subtitle
 
 @Composable
 fun Home(
@@ -47,25 +50,31 @@ fun Home(
     }
 
     if(userName.isEmpty()) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = stringResource(id = R.string.set_user_name),
-                fontWeight = FontWeight.Bold,
-            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = stringResource(id = R.string.set_user_name),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = subtitle
+                )
 
-            TextField(
-                value = userNameLocal,
-                onValueChange = { userNameLocal = it },
-                label = {
-                    Text(text = "Username")
-                },
-            )
+                TextField(
+                    value = userNameLocal,
+                    onValueChange = { userNameLocal = it },
+                    label = {
+                        Text(text = "Username")
+                    },
+                )
 
-            Button(onClick = { viewModel.saveToDataStore(userNameLocal) }) {
-                Text(text = stringResource(id = R.string.save))
+                Button(onClick = { viewModel.saveToDataStore(userNameLocal) }) {
+                    Text(text = stringResource(id = R.string.save))
+                }
             }
         }
     } else {
@@ -86,7 +95,7 @@ fun DisplayHomeScreen( onNavigateToGame: () -> Unit, userName: String ){
         color = MaterialTheme.colorScheme.background,
     )
     {
-        Column(modifier = Modifier.padding(top = 120.dp),) {
+        Column(modifier = Modifier.padding(top = screenPadding),) {
             Title()
             Spacer(modifier = Modifier.size(60.dp))
             SimpleBtnComposable(
@@ -115,12 +124,12 @@ fun Title(){
 
         Text(
             text = stringResource(id = R.string.app_name),
-            fontSize = 40.sp,
+            fontSize = h1,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = stringResource(id = R.string.creator),
-            fontSize = 30.sp,
+            fontSize = h2,
             fontStyle = FontStyle.Italic
         )
 
