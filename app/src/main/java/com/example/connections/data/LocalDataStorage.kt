@@ -8,6 +8,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+// Access to Data Store (primitive values locally stored in the phone)
 val Context.dataStore by preferencesDataStore(name = "CONNECTIONS_DATA_STORE")
 
 object PreferencesKeys {

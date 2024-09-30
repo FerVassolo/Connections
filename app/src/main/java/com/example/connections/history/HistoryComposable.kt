@@ -1,6 +1,7 @@
 package com.example.connections.history
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,31 +17,57 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.connections.ui.theme.Green
 import com.example.connections.ui.theme.darkGray
-import com.example.connections.ui.theme.gray
 import com.example.connections.ui.theme.lightGray
+import com.example.connections.R
+import com.example.connections.category.CategoryModel
+import com.example.connections.category.CategoryViewModel
+import com.example.connections.common.LoadingIcon
+import com.example.connections.common.ShowRetry
+
 
 @Composable
-fun History() {
+fun History(onNavigateToGame: (Int) -> Unit) {
+    val viewModel = hiltViewModel<CategoryViewModel>()
+    val words by viewModel.categories.collectAsState()
+    val loading by viewModel.loadingCategories.collectAsState()
+    val showRetry by viewModel.showRetry.collectAsState()
+    if(loading) {
+        LoadingIcon()
+    } else if(showRetry) {
+        ShowRetry(viewModel = viewModel, message = stringResource(id = R.string.cant_load_words))
+    } else {
+        val gameIds = getGameIds(words)
+        ShowHistory(onNavigateToGame = onNavigateToGame, gameIds)
+    }
+}
+fun getGameIds(words: List<CategoryModel>): List<Int> {
+    return words.distinctBy { it.game }.map { it.game }
+}
 
-    val games = listOf(
-        GameHistory(1, true),
-        GameHistory(2, false),
-        GameHistory(3, true),
-        GameHistory(4, true),
-    )
+// USA ROOM
+@Composable
+fun ShowHistory(onNavigateToGame: (Int) -> Unit, game: List<Int>) {
+    val historyViewModel = hiltViewModel<GameHistoryViewModel>()
+    val playedList by historyViewModel.playedList.collectAsState(initial = emptyList())
+
+    val games = game.map { gameId ->
+        GameHistory(gameId, playedList.any { it.gameNum == gameId })
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -50,23 +77,28 @@ fun History() {
             modifier = Modifier.padding(16.dp)
         ) {
             games.forEach { game ->
-                HistoryItem(game = game)
+                HistoryItem(game = game, onClick = { onNavigateToGame(game.gameNum) })
                 Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }
 }
 
+
+
+
 @Composable
-fun HistoryItem(game: GameHistory) {
+fun HistoryItem(game: GameHistory, onClick: () -> Unit) {
     val configuration = LocalConfiguration.current
     val boxHeight = configuration.screenWidthDp.dp * 0.2f
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(boxHeight) // Establece la altura al 20% del contenedor padre
-            .background(color = lightGray) // Placeholder for image
+            .height(boxHeight)
+            .background(color = lightGray)
             .padding(start = 16.dp)
+            .clickable { onClick() }
+
     ) {
         val innerBoxHeight =  configuration.screenWidthDp.dp  * 0.14f
         Row(
@@ -82,7 +114,8 @@ fun HistoryItem(game: GameHistory) {
                 Text(text = "Game ${game.gameNum}", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = if (game.played) "Played" else "Not Played",
+                    text = if (game.played) stringResource(id = R.string.played)
+                            else stringResource(id = R.string.not_played),
                     color = Black,
                     modifier = Modifier
                         .background(
@@ -100,5 +133,5 @@ fun HistoryItem(game: GameHistory) {
 @Preview
 @Composable
 fun HistoryPreview() {
-    History()
+    History(onNavigateToGame = {})
 }
