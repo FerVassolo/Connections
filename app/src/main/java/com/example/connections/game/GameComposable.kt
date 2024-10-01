@@ -296,7 +296,8 @@ fun MatchedCategoriesBar(matchedCategories: List<String>) {
             ) {
                 Text(
                     text = category,
-                    modifier = Modifier.padding(matchedCategoriesInnerPadding)
+                    modifier = Modifier.padding(matchedCategoriesInnerPadding),
+                    fontSize = subtitle,
                 )
             }
         }

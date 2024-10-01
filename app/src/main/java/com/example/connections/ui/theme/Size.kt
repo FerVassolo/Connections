@@ -24,6 +24,6 @@ val rowPaddingVertical = 2.dp
 val wordButtonWidth = 90.dp
 val wordButtonHeight = 70.dp
 val buttonContentPadding = 0.dp
-val matchedCategoriesPadding = 8.dp
+val matchedCategoriesPadding = 16.dp
 val matchedCategoriesVerticalPadding = 4.dp
 val matchedCategoriesInnerPadding = 16.dp
