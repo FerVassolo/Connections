@@ -38,6 +38,13 @@ import com.example.connections.category.CategoryModel
 import com.example.connections.category.CategoryViewModel
 import com.example.connections.common.LoadingIcon
 import com.example.connections.common.ShowRetry
+import com.example.connections.ui.theme.historyGap
+import com.example.connections.ui.theme.historyItemInnerPadding
+import com.example.connections.ui.theme.historyItemRightHandHorPadding
+import com.example.connections.ui.theme.historyItemRightHandVerPadding
+import com.example.connections.ui.theme.historyPadding
+import com.example.connections.ui.theme.historyRadius
+import com.example.connections.ui.theme.historyTextPadding
 
 
 @Composable
@@ -74,11 +81,11 @@ fun ShowHistory(onNavigateToGame: (Int) -> Unit, game: List<Int>) {
         color = MaterialTheme.colorScheme.background,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(historyPadding)
         ) {
             games.forEach { game ->
                 HistoryItem(game = game, onClick = { onNavigateToGame(game.gameNum) })
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(historyGap))
             }
         }
     }
@@ -96,7 +103,7 @@ fun HistoryItem(game: GameHistory, onClick: () -> Unit) {
             .fillMaxWidth()
             .height(boxHeight)
             .background(color = lightGray)
-            .padding(start = 16.dp)
+            .padding(start = historyPadding)
             .clickable { onClick() }
 
     ) {
@@ -109,10 +116,10 @@ fun HistoryItem(game: GameHistory, onClick: () -> Unit) {
                     .size(innerBoxHeight)
                     .background(color = darkGray)  // Placeholder for image
             )
-            Spacer(modifier = Modifier.width(26.dp))
+            Spacer(modifier = Modifier.width(historyItemInnerPadding))
             Column{
                 Text(text = "Game ${game.gameNum}", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(historyTextPadding))
                 Text(
                     text = if (game.played) stringResource(id = R.string.played)
                             else stringResource(id = R.string.not_played),
@@ -120,18 +127,15 @@ fun HistoryItem(game: GameHistory, onClick: () -> Unit) {
                     modifier = Modifier
                         .background(
                             color = if (game.played) Green else LightGray,
-                            shape = RoundedCornerShape(2.dp)
+                            shape = RoundedCornerShape(historyRadius)
                         )
-                        .padding(horizontal = 12.dp, vertical = 4.dp)
+                        .padding(
+                            horizontal = historyItemRightHandHorPadding,
+                            vertical = historyItemRightHandVerPadding
+                        )
                 )
             }
         }
 
     }
-}
-
-@Preview
-@Composable
-fun HistoryPreview() {
-    History(onNavigateToGame = {})
 }

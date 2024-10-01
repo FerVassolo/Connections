@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.connections.ui.theme.Black
 import com.example.connections.ui.theme.Pink40
+import com.example.connections.ui.theme.Purple40
 
 
 @Composable
@@ -65,7 +66,7 @@ data class SimpleButton(
     val title: String,
     val padding: Int,
     val onClick: () -> Unit,
-    val color: Color = Pink40,
-    val borderColor: Color = Pink40,
+    val color: Color = Purple40,
+    val borderColor: Color = Purple40,
     val textColor: Color = Black
 )

@@ -1,7 +1,7 @@
 package com.example.connections.game
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,11 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,8 +45,6 @@ import com.example.connections.common.SimpleButton
 import com.example.connections.data.GameHistory
 import com.example.connections.history.GameHistoryViewModel
 import com.example.connections.ui.theme.Black
-import com.example.connections.ui.theme.PurpleGrey40
-import com.example.connections.ui.theme.PurpleGrey80
 import com.example.connections.ui.theme.White
 import com.example.connections.ui.theme.darkGray
 import com.example.connections.ui.theme.darkGreen
@@ -55,24 +52,31 @@ import com.example.connections.ui.theme.increasedWordButton
 import com.example.connections.ui.theme.lightGreen
 import com.example.connections.ui.theme.subtitle
 import com.example.connections.ui.theme.wordButton
-
+import com.example.connections.ui.theme.buttonContentPadding
+import com.example.connections.ui.theme.largeSpacerSize
+import com.example.connections.ui.theme.matchedCategoriesInnerPadding
+import com.example.connections.ui.theme.matchedCategoriesPadding
+import com.example.connections.ui.theme.matchedCategoriesVerticalPadding
+import com.example.connections.ui.theme.rowPaddingVertical
+import com.example.connections.ui.theme.smallSpacerSize
+import com.example.connections.ui.theme.topPadding
+import com.example.connections.ui.theme.wordButtonHeight
+import com.example.connections.ui.theme.wordButtonWidth
 
 // IF the Id is -1, then we are getting the last one.
 @Composable
 fun LoadGame(gameId: Int, gameHistoryViewModel: GameHistoryViewModel) {
-    // Cuando llamo a la API, como la mía está horrendamente implementada, llama a TODOS los juegos.
-    // Este método se encarga de filtar y agarrar, entre ellos, solo el del gameId q se le pase.
     val viewModel = hiltViewModel<CategoryViewModel>()
     val words by viewModel.categories.collectAsState()
     val loading by viewModel.loadingCategories.collectAsState()
     val showRetry by viewModel.showRetry.collectAsState()
     val currentWords: List<CategoryModel>
-    if(loading) {
+
+    if (loading) {
         LoadingIcon()
-    } else if(showRetry) {
+    } else if (showRetry) {
         ShowRetry(viewModel = viewModel, message = stringResource(id = R.string.cant_load_words))
-    }
-    else {
+    } else {
         currentWords = getCurrentGame(words, gameId)
         gameHistoryViewModel.addGame(GameHistory(currentWords.last().game))
         DisplayGame(currentWords)
@@ -80,8 +84,8 @@ fun LoadGame(gameId: Int, gameHistoryViewModel: GameHistoryViewModel) {
 }
 
 fun getCurrentGame(allWords: List<CategoryModel>, gameId: Int): List<CategoryModel> {
-    var lastGame = gameId;
-    if(gameId < 0) {
+    var lastGame = gameId
+    if (gameId < 0) {
         lastGame = allWords.maxByOrNull { it.game }?.game!! // Last game
     }
     return allWords.filter { it.game == lastGame }  // Filtra las palabras por gameId
@@ -92,25 +96,19 @@ fun DisplayGame(words: List<CategoryModel>) {
     var selectedWords by remember { mutableStateOf(mutableListOf<String>()) }
     var matchedCategories by remember { mutableStateOf(mutableListOf<String>()) }
     var attemptsRemaining by remember { mutableIntStateOf(3) }
-    var remainingWords by remember {
-        mutableStateOf(words.filter { it.category !in matchedCategories })
-    }
+    var remainingWords by remember { mutableStateOf(words.filter { it.category !in matchedCategories }) }
 
-    // Cada vez que matchedCategories cambie se actualiza remainingWords.
     LaunchedEffect(matchedCategories) {
         remainingWords = words.filter { it.category !in matchedCategories }
     }
 
     if (words.isEmpty()) {
         Text(text = stringResource(id = R.string.cant_load_words))
-    }
-    else if(attemptsRemaining == 0) {
+    } else if (attemptsRemaining == 0) {
         GameOver()
-    }
-    else if(remainingWords.isEmpty()) {
+    } else if (remainingWords.isEmpty()) {
         WonGame(matchedCategories)
-    }
-    else {
+    } else {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background,
@@ -118,11 +116,11 @@ fun DisplayGame(words: List<CategoryModel>) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 60.dp),
+                    .padding(top = topPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Instructions()
-                Spacer(modifier = Modifier.size(40.dp))
+                Spacer(modifier = Modifier.size(largeSpacerSize))
                 MatchedCategoriesBar(matchedCategories = matchedCategories)
                 DisplayWords(
                     words = remainingWords,
@@ -136,9 +134,9 @@ fun DisplayGame(words: List<CategoryModel>) {
                     },
                     onDeselectAll = { selectedWords.clear() }
                 )
-                Spacer(modifier = Modifier.size(15.dp))
+                Spacer(modifier = Modifier.size(smallSpacerSize))
                 AttemptsRemaining(remaining = attemptsRemaining)
-                Spacer(modifier = Modifier.size(15.dp))
+                Spacer(modifier = Modifier.size(smallSpacerSize))
                 ActionButtons(
                     selectedWordsCount = selectedWords.size,
                     onDeselectClicked = { selectedWords.clear() },
@@ -169,7 +167,7 @@ fun DisplayWords(
     onDeselectAll: () -> Unit
 ) {
     val wordsPerRow = 4
-    val totalRows = (words.size + wordsPerRow - 1) / wordsPerRow  // Calcula cuántas filas necesita (siempre 4)
+    val totalRows = (words.size + wordsPerRow - 1) / wordsPerRow  // Calcula cuántas filas necesita
 
     for (rowIndex in 0 until totalRows) {
         Row(
@@ -177,7 +175,7 @@ fun DisplayWords(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 2.dp),
+                .padding(vertical = rowPaddingVertical),
         ) {
             for (wordIndex in 0 until wordsPerRow) {
                 val index = rowIndex * wordsPerRow + wordIndex
@@ -202,27 +200,32 @@ fun WordButton(text: String, isSelected: Boolean, onWordClicked: (String) -> Uni
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) darkGreen else lightGreen
         ),
-        modifier = Modifier.size(width = 90.dp, height = 70.dp),
+        modifier = Modifier.size(width = wordButtonWidth, height = wordButtonHeight),
         shape = MaterialTheme.shapes.extraSmall,
-        contentPadding = PaddingValues(0.dp)
+        contentPadding = PaddingValues(buttonContentPadding)
     ) {
-        if(text.length > 7) {
-            Text(text = text,
-                color =  if (isSelected) Color.White else Color.Black,
+        if (text.length > 7) {
+            Text(
+                text = text,
+                color = if (isSelected) Color.White else Color.Black,
                 fontSize = (increasedWordButton - text.length).sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis)
-        } else
-        Text(text = text, fontSize = wordButton,
-            color =  if (isSelected) Color.White else Color.Black,
-            fontWeight = FontWeight.Bold,)
+                overflow = TextOverflow.Ellipsis
+            )
+        } else {
+            Text(
+                text = text,
+                fontSize = wordButton,
+                color = if (isSelected) Color.White else Color.Black,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
 }
 
-
 @Composable
-fun Instructions(){
+fun Instructions() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -237,7 +240,7 @@ fun Instructions(){
 }
 
 @Composable
-fun AttemptsRemaining(remaining: Int){
+fun AttemptsRemaining(remaining: Int) {
     Text(text = stringResource(id = R.string.attempts) + " " + remaining.toString())
 }
 
@@ -247,23 +250,6 @@ fun ActionButtons(selectedWordsCount: Int, onDeselectClicked: () -> Unit, onSubm
     val submitColor = if (selectedWordsCount == 4) Black else darkGray
 
     val buttons = listOf(
-        /*
-        ESTOS DOS BOTONES SON DE CHICHE, PERO EN UN FUTURO ME GUSTARÍA IMPLEMENTARLOS BIEN
-        SimpleButton(
-            title = stringResource(id = R.string.shuffle),
-            padding = 10,
-            onClick = { *//* Lógica para el shuffle *//* },
-            color = White,
-            borderColor = Black
-        ),
-        SimpleButton(
-            title = stringResource(id = R.string.deselect),
-            padding = 10,
-            onClick = onDeselectClicked,
-            color = White,
-            borderColor = Black,
-            textColor = deselectColor
-        ),*/
         SimpleButton(
             title = stringResource(id = R.string.submit),
             padding = 10,
@@ -273,6 +259,7 @@ fun ActionButtons(selectedWordsCount: Int, onDeselectClicked: () -> Unit, onSubm
             textColor = submitColor
         )
     )
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
@@ -295,28 +282,27 @@ fun MatchedCategoriesBar(matchedCategories: List<String>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(matchedCategoriesPadding),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         matchedCategories.forEach { category ->
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                color =  darkGray,
-                shape = MaterialTheme.shapes.small
+                    .padding(vertical = matchedCategoriesVerticalPadding)
+                    .clip(MaterialTheme.shapes.medium),  // Añade el borde redondeado aquí
+
+                color = MaterialTheme.colorScheme.surfaceVariant
             ) {
                 Text(
-                    text = category.uppercase(),
-                    modifier = Modifier.padding(16.dp),
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = subtitle
+                    text = category,
+                    modifier = Modifier.padding(matchedCategoriesInnerPadding)
                 )
             }
         }
     }
 }
+
 
 @Composable
 fun GameOver(){

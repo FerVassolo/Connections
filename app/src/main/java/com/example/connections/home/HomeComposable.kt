@@ -31,6 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.connections.R
 import com.example.connections.common.SimpleBtnComposable
 import com.example.connections.common.SimpleButton
+import com.example.connections.ui.theme.Pink40
+import com.example.connections.ui.theme.Purple40
 import com.example.connections.ui.theme.h1
 import com.example.connections.ui.theme.h2
 import com.example.connections.ui.theme.textFieldPadding
@@ -140,5 +142,5 @@ fun Title(){
 @Preview
 @Composable
 fun preview(){
-    Home(onNavigateToGame = {})
+    DisplayHomeScreen(onNavigateToGame = {}, "Juan Verón")
 }

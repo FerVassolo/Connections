@@ -89,13 +89,13 @@ fun TopBar(
                     )
                 }
             },
-            actions = {
+/*            actions = {
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = "",
                     modifier = Modifier.padding(16.dp)
                 )
-            },
+            },*/
         )
     }
 }

@@ -18,13 +18,15 @@ import com.example.connections.R
 import com.example.connections.category.CategoryViewModel
 import com.example.connections.ui.theme.PurpleGrey40
 import com.example.connections.ui.theme.PurpleGrey80
+import com.example.connections.ui.theme.loadingIcon
+import com.example.connections.ui.theme.textFieldPadding
 
 @Composable
 fun LoadingIcon(){
     Box(modifier = Modifier.fillMaxSize()) {
         CircularProgressIndicator(
             modifier = Modifier
-                .size(64.dp)
+                .size(loadingIcon)
                 .align(Alignment.Center),
             color = PurpleGrey40,
             trackColor = PurpleGrey80,
@@ -35,7 +37,7 @@ fun LoadingIcon(){
 @Composable
 fun ShowRetry(viewModel: CategoryViewModel, message: String) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(textFieldPadding, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
