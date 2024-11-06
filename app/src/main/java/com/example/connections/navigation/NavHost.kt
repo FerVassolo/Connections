@@ -1,6 +1,5 @@
 package com.example.connections.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -9,12 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.connections.category.CategoryModel
-import com.example.connections.data.GameHistory
 import com.example.connections.game.LoadGame
 import com.example.connections.history.GameHistoryViewModel
 import com.example.connections.home.Home
 import com.example.connections.history.History
+import com.example.connections.security.BiometricStart
 
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
@@ -22,9 +20,14 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
     var game = -1
     NavHost(
         navController = navController,
-        startDestination = ConnectionsScreen.Home.name,
+        startDestination = ConnectionsScreen.Security.name,
         modifier = Modifier.padding(innerPadding)
     ) {
+        composable(route = ConnectionsScreen.Security.name) {
+            BiometricStart(onNavigateToHome = {
+                navController.navigate(ConnectionsScreen.Home.name)
+            })
+        }
         composable(route = ConnectionsScreen.Home.name) {
             Home(
                 onNavigateToGame = {

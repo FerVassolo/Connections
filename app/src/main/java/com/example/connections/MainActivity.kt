@@ -17,12 +17,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.connections.home.HomeViewModel
 import com.example.connections.navigation.BottomBar
 import com.example.connections.navigation.NavHostComposable
-
+import androidx.fragment.app.FragmentActivity
 import com.example.connections.navigation.TopBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

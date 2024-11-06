@@ -3,6 +3,10 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+
+    /*
+        id("com.android.application") version "8.5.0" apply false
+    */
 }
 
 android {
@@ -75,7 +79,7 @@ dependencies {
     // STATES
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.android.compiler.v249)
 
     // RETROFIT & GSON
     implementation(libs.retrofit)
@@ -89,5 +93,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     kapt("androidx.room:room-compiler:2.6.1")
     implementation(libs.kotlinx.coroutines.android)
+
+    // Auth
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
 
 }

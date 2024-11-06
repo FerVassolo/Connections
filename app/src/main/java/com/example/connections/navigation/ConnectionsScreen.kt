@@ -3,7 +3,8 @@ package com.example.connections.navigation
 enum class ConnectionsScreen {
     Home,
     Game,
-    History
+    History,
+    Security,
 }
 
 

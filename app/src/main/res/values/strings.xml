@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Connections</string>
+    <string name="app_name" translatable="false">Connections</string>
     <string name="creator">By Fer</string>
     <string name="retry_load_ranking">Can\'t load ranking, try again later</string>
     <string name="set_user_name">Set your user name</string>
