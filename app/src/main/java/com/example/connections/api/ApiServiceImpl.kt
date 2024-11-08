@@ -35,7 +35,7 @@ class ApiServiceImpl @Inject constructor() {
                     onSuccess(categories);
                 }
                 else{
-                    onFailure(Exception("Error getting words"))
+                    onFailure(Exception(R.string.getting_error.toString()))
                 }
             }
             override fun onFailure(t: Throwable?) {
@@ -47,9 +47,3 @@ class ApiServiceImpl @Inject constructor() {
     }
 }
 
-/* listOf(
-            Category(listOf("ANDUJAR", "DESÁBATO", "BRAÑA", "SABELLA"), "ESTUDIANTES 2009"),
-            Category(listOf("MARADONA", "BILARDO", "VALDANO", "PUMPIDO"), "ARGENTINA 1986"),
-            Category(listOf("ARAGORN", "GANDALF", "FRODO", "SAM"), "EL SEÑOR DE LOS ANILLOS"),
-            Category(listOf("CHARLY", "EL INDIO", "PITY", "PATO"), "ROCK ARGIE"),
-        )*/

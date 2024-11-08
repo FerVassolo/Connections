@@ -26,16 +26,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.connections.R
 import com.example.connections.common.SimpleBtnComposable
 import com.example.connections.common.SimpleButton
-import com.example.connections.ui.theme.Pink40
-import com.example.connections.ui.theme.Purple40
+import com.example.connections.ui.theme.mainScreenTop
 import com.example.connections.ui.theme.h1
 import com.example.connections.ui.theme.h2
-import com.example.connections.ui.theme.textFieldPadding
+import com.example.connections.ui.theme.homeVerticalAlign
 import com.example.connections.ui.theme.screenPadding
 import com.example.connections.ui.theme.subtitle
 
@@ -57,7 +55,7 @@ fun Home(
             contentAlignment = Alignment.Center
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(homeVerticalAlign),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
@@ -70,7 +68,7 @@ fun Home(
                     value = userNameLocal,
                     onValueChange = { userNameLocal = it },
                     label = {
-                        Text(text = "Username")
+                        Text(text = stringResource(id = R.string.user_name))
                     },
                 )
 
@@ -99,7 +97,7 @@ fun DisplayHomeScreen( onNavigateToGame: () -> Unit, userName: String ){
     {
         Column(modifier = Modifier.padding(top = screenPadding),) {
             Title()
-            Spacer(modifier = Modifier.size(60.dp))
+            Spacer(modifier = Modifier.size(mainScreenTop))
             SimpleBtnComposable(
                 button.title,
                 button.padding,
@@ -108,7 +106,7 @@ fun DisplayHomeScreen( onNavigateToGame: () -> Unit, userName: String ){
                 button.borderColor,
                 button.textColor
             )
-            Spacer(modifier = Modifier.size(60.dp))
+            Spacer(modifier = Modifier.size(mainScreenTop))
 
         }
     }
@@ -142,5 +140,5 @@ fun Title(){
 @Preview
 @Composable
 fun preview(){
-    DisplayHomeScreen(onNavigateToGame = {}, "Juan Verón")
+    DisplayHomeScreen(onNavigateToGame = {}, R.string.sample_name.toString())
 }

@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.connections.ui.theme.Black
-import com.example.connections.ui.theme.Pink40
 import com.example.connections.ui.theme.Purple40
-
+import com.example.connections.ui.theme.buttonBorderWidth
+import com.example.connections.ui.theme.buttonRoundedCornerRadius
 
 @Composable
 fun SimpleBtnComposable(title: String, padding: Int, onClick: () -> Unit, color: Color, borderColor: Color, textColor: Color) {
@@ -28,7 +28,7 @@ fun SimpleBtnComposable(title: String, padding: Int, onClick: () -> Unit, color:
             .padding(horizontal = padding.dp)
             .then(
                 if (borderColor != color) {
-                    Modifier.border(width = 1.dp, color = borderColor, shape = MaterialTheme.shapes.small)
+                    Modifier.border(width = buttonBorderWidth, color = borderColor, shape = MaterialTheme.shapes.small)
                 } else {
                     Modifier // No añade borde si los colores son iguales
                 }
@@ -44,13 +44,13 @@ fun SimpleBtnComposable(title: String, padding: Int, onClick: () -> Unit, color:
 
 @Composable
 fun EnumerableSimpleBtn(title: String, padding: Int, onClick: () -> Unit, color: Color, borderColor: Color, textColor: Color) {
-    val buttonShape = RoundedCornerShape(50) // = 50% percent
+    val buttonShape = RoundedCornerShape(buttonRoundedCornerRadius)
     Button(
         onClick = onClick,
         modifier = Modifier
             .wrapContentHeight()
             .padding(horizontal = padding.dp)
-            .border(width = 1.dp, color = borderColor, shape = buttonShape),
+            .border(width = buttonBorderWidth, color = borderColor, shape = buttonShape),
         colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = buttonShape
     ) {
@@ -60,6 +60,7 @@ fun EnumerableSimpleBtn(title: String, padding: Int, onClick: () -> Unit, color:
         )
     }
 }
+
 
 
 data class SimpleButton(

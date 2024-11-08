@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -22,17 +21,18 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.connections.R
+import com.example.connections.ui.theme.boxElevation
+import com.example.connections.ui.theme.boxStrokeWidth
 import com.example.connections.ui.theme.gray
 import com.example.connections.ui.theme.subtitle
+import com.example.connections.ui.theme.topBarPadding
 
 
 val boxModifier = Modifier
     .drawBehind {
-        val strokeWidth = 2.dp.toPx()
+        val strokeWidth = boxStrokeWidth.toPx()
         val y = size.height - strokeWidth / 2
         clipRect {
             drawLine(
@@ -44,7 +44,7 @@ val boxModifier = Modifier
         }
     }
     .shadow(
-        elevation = 4.dp,
+        elevation = boxElevation,
         shape = RectangleShape,
         clip = false
     )
@@ -70,7 +70,7 @@ fun TopBar(
                         imageVector = it,
                         contentDescription = "",
                         modifier = Modifier
-                            .padding(start = 20.dp)
+                            .padding(start = topBarPadding)
                             .clickable {
                                 if (showBackButton) {
                                     navController.popBackStack()
@@ -82,7 +82,7 @@ fun TopBar(
             title = {
                 if(userName.isNotEmpty()){
                     Text(
-                        text = stringResource(id = R.string.greetings) + " " + userName.capitalize(),
+                        text = stringResource(id = R.string.greetings) + userName.capitalize(),
                         fontSize = subtitle,
                         modifier = Modifier
                             .wrapContentHeight()

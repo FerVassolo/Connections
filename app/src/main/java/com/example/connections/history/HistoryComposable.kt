@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color.Companion.Black
@@ -28,7 +27,6 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.connections.ui.theme.Green
 import com.example.connections.ui.theme.darkGray
@@ -38,6 +36,7 @@ import com.example.connections.category.CategoryModel
 import com.example.connections.category.CategoryViewModel
 import com.example.connections.common.LoadingIcon
 import com.example.connections.common.ShowRetry
+import com.example.connections.ui.theme.gameNumFont
 import com.example.connections.ui.theme.historyGap
 import com.example.connections.ui.theme.historyItemInnerPadding
 import com.example.connections.ui.theme.historyItemRightHandHorPadding
@@ -118,7 +117,8 @@ fun HistoryItem(game: GameHistory, onClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.width(historyItemInnerPadding))
             Column{
-                Text(text = "Game ${game.gameNum}", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                Text(text = stringResource(id = R.string.game) + game.gameNum.toString(),
+                    fontSize = gameNumFont, fontWeight = FontWeight.SemiBold, color = Black)
                 Spacer(modifier = Modifier.height(historyTextPadding))
                 Text(
                     text = if (game.played) stringResource(id = R.string.played)

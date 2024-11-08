@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
@@ -24,6 +24,8 @@ import com.example.connections.home.HomeViewModel
 import com.example.connections.navigation.BottomBar
 import com.example.connections.navigation.NavHostComposable
 import com.example.connections.navigation.TopBar
+import com.example.connections.ui.theme.ConnectionsTheme // Importa el tema
+import com.example.connections.ui.theme.authScreenSpacer
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
@@ -46,41 +48,41 @@ class MainActivity : FragmentActivity() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     // Maneja los errores específicos y muestra un mensaje
                     when (errorCode) {
-                        BiometricPrompt.ERROR_HW_UNAVAILABLE -> showToast("Hardware biométrico no disponible")
-                        BiometricPrompt.ERROR_UNABLE_TO_PROCESS -> showToast("No se pudo procesar la huella")
-                        BiometricPrompt.ERROR_TIMEOUT -> showToast("Tiempo de espera agotado")
-                        BiometricPrompt.ERROR_LOCKOUT -> showToast("Demasiados intentos, intenta más tarde")
-                        BiometricPrompt.ERROR_CANCELED -> showToast("Autenticación cancelada")
-                        BiometricPrompt.ERROR_USER_CANCELED -> showToast("Has cancelado la autenticación")
-                        else -> showToast("Error desconocido: $errString")
+                        BiometricPrompt.ERROR_HW_UNAVAILABLE -> showToast(getString(R.string.unavailable_bio))
+                        BiometricPrompt.ERROR_UNABLE_TO_PROCESS -> showToast(getString(R.string.unable_to_process))
+                        BiometricPrompt.ERROR_TIMEOUT -> showToast(getString(R.string.timeout))
+                        BiometricPrompt.ERROR_LOCKOUT -> showToast(getString(R.string.lockout))
+                        BiometricPrompt.ERROR_CANCELED -> showToast(getString(R.string.auth_cancelled))
+                        BiometricPrompt.ERROR_USER_CANCELED -> showToast(getString(R.string.user_cancelled))
+                        else -> showToast(getString(R.string.unknown_error) + errString)
                     }
-                    Log.e("BiometricAuth", "Error code: $errorCode, message: $errString")
                 }
 
                 override fun onAuthenticationFailed() {
                     // La autenticación falló, muestra un mensaje al usuario
-                    showToast("Autenticación fallida, intenta nuevamente")
+                    showToast(getString(R.string.failed_toast))
                 }
             })
 
             promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Autenticación Biométrica")
-                .setSubtitle("Inicia sesión usando tu huella o credenciales")
-                .setNegativeButtonText("Cancelar")
+                .setTitle(getString(R.string.bio_auth))
+                .setSubtitle(getString(R.string.use_bio))
+                .setNegativeButtonText(getString(R.string.cancel))
                 .build()
 
             setContent {
-                AuthenticationScreen(onRetryAuthentication = {
-                    biometricPrompt.authenticate(promptInfo)
-                })
+                ConnectionsTheme { // Aplica el tema aquí
+                    AuthenticationScreen(onRetryAuthentication = {
+                        biometricPrompt.authenticate(promptInfo)
+                    })
+                }
             }
 
             // Lanza la autenticación biométrica al abrir la actividad
             biometricPrompt.authenticate(promptInfo)
 
         } catch (e: Exception) {
-            Log.e("BiometricAuth", "Error al inicializar la autenticación biométrica", e)
-            showToast("No se pudo inicializar la autenticación biométrica")
+            showToast(getString(R.string.bio_catch))
         }
     }
 
@@ -95,12 +97,12 @@ class MainActivity : FragmentActivity() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Por favor, autentícate para continuar")
+                Text(text = stringResource(R.string.please_auth))
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(authScreenSpacer))
 
                 Button(onClick = onRetryAuthentication) {
-                    Text("Reintentar autenticación")
+                    Text(stringResource(R.string.retry_auth))
                 }
             }
         }
@@ -108,30 +110,32 @@ class MainActivity : FragmentActivity() {
 
     private fun navigateToHome() {
         setContent {
-            val viewModel = hiltViewModel<HomeViewModel>()
-            val userName by viewModel.userName.collectAsState()
-            val navController = rememberNavController()
+            ConnectionsTheme { // Aplica el tema aquí también
+                val viewModel = hiltViewModel<HomeViewModel>()
+                val userName by viewModel.userName.collectAsState()
+                val navController = rememberNavController()
 
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                Scaffold(
-                    topBar = {
-                        TopBar(
-                            userName = userName,
-                            navController = navController
-                        )
-                    },
-                    bottomBar = {
-                        BottomBar(
-                            onNavigate = {
-                                navController.navigate(it)
-                            }
-                        )
-                    },
-                ) { innerPadding ->
-                    NavHostComposable(innerPadding, navController)
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Scaffold(
+                        topBar = {
+                            TopBar(
+                                userName = userName,
+                                navController = navController
+                            )
+                        },
+                        bottomBar = {
+                            BottomBar(
+                                onNavigate = {
+                                    navController.navigate(it)
+                                }
+                            )
+                        },
+                    ) { innerPadding ->
+                        NavHostComposable(innerPadding, navController)
+                    }
                 }
             }
         }

@@ -4,12 +4,13 @@
     <string name="retry_load_ranking">Can\'t load ranking, try again later</string>
     <string name="set_user_name">Set your user name</string>
     <string name="save">Save</string>
-    <string name="greetings">Hello, </string>
+    <string name="greetings">Hello,\u00A0</string>
+    <string name="sample_name">Juan Verón</string>
 
     <!--GAME-->
     <string name="play_button">Play</string>
     <string name="instruction">Create four groups of four!</string>
-    <string name="attempts">Attempts remaining: </string>
+    <string name="attempts">Attempts remaining:\u00A0</string>
     <string name="cant_load_words">Can\'t get words</string>
     <string name="retry">Retry</string>
     <string name="shuffle">Shuffle</string>
@@ -21,4 +22,27 @@
     <!--HISTORY-->
     <string name="played">Played</string>
     <string name="not_played">Not played</string>
+    <string name="game">Game\u00A0</string>
+
+    <!--API SERVICE-->
+    <string name="getting_error">Error getting words</string>
+
+    <!--MAIN ACTIVITY-->
+    <string name="unavailable_bio">Biometric hardware unavailable</string>
+    <string name="unable_to_process">Could not process fingerprint</string>
+    <string name="timeout">Timeout</string>
+    <string name="lockout">Too many attempts, try again later</string>
+    <string name="auth_cancelled">Authentication cancelled</string>
+    <string name="user_cancelled">You cancelled the authentication</string>
+    <string name="unknown_error">Unknown error:</string>
+    <string name="failed_toast">Authentication failed, try again</string>
+    <string name="bio_auth">Biometric Authentication</string>
+    <string name="use_bio">Log in using your fingerprint or credentials</string>
+    <string name="cancel">Cancel</string>
+    <string name="bio_catch">Could not initialize biometric authentication</string>
+    <string name="please_auth">Please authenticate to continue</string>
+    <string name="retry_auth">Retry authentication</string>
+
+    <string name="user_name">Username</string>
+
 </resources>

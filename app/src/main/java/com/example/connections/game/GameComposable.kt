@@ -1,6 +1,5 @@
 package com.example.connections.game
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.connections.R
@@ -53,6 +51,7 @@ import com.example.connections.ui.theme.lightGreen
 import com.example.connections.ui.theme.subtitle
 import com.example.connections.ui.theme.wordButton
 import com.example.connections.ui.theme.buttonContentPadding
+import com.example.connections.ui.theme.mainScreenTop
 import com.example.connections.ui.theme.largeSpacerSize
 import com.example.connections.ui.theme.matchedCategoriesInnerPadding
 import com.example.connections.ui.theme.matchedCategoriesPadding
@@ -62,6 +61,7 @@ import com.example.connections.ui.theme.smallSpacerSize
 import com.example.connections.ui.theme.topPadding
 import com.example.connections.ui.theme.wordButtonHeight
 import com.example.connections.ui.theme.wordButtonWidth
+import com.example.connections.ui.theme.wordsSpacer
 
 // IF the Id is -1, then we are getting the last one.
 @Composable
@@ -86,9 +86,11 @@ fun LoadGame(gameId: Int, gameHistoryViewModel: GameHistoryViewModel) {
 fun getCurrentGame(allWords: List<CategoryModel>, gameId: Int): List<CategoryModel> {
     var lastGame = gameId
     if (gameId < 0) {
-        lastGame = allWords.maxByOrNull { it.game }?.game!! // Last game
+        lastGame = allWords.maxByOrNull { it.game }?.game!! // Último juego
     }
-    return allWords.filter { it.game == lastGame }  // Filtra las palabras por gameId
+    return allWords
+        .filter { it.game == lastGame }  // Filtra las palabras por gameId
+        .shuffled()  // Baraja las palabras
 }
 
 @Composable
@@ -185,7 +187,7 @@ fun DisplayWords(
                         isSelected = selectedWords.contains(words[index].word),
                         onWordClicked = { word -> onWordSelected(word) }
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Spacer(modifier = Modifier.width(wordsSpacer))
                 }
             }
         }
@@ -241,7 +243,8 @@ fun Instructions() {
 
 @Composable
 fun AttemptsRemaining(remaining: Int) {
-    Text(text = stringResource(id = R.string.attempts) + " " + remaining.toString())
+
+    Text(text = stringResource(id = R.string.attempts) + remaining.toString())
 }
 
 @Composable
@@ -314,7 +317,7 @@ fun GameOver(){
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 60.dp),
+                .padding(top = mainScreenTop),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(text = stringResource(id = R.string.game_over))
@@ -331,7 +334,7 @@ fun WonGame(matchedCategories: List<String>){
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 60.dp),
+                .padding(top = mainScreenTop),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             MatchedCategoriesBar(matchedCategories = matchedCategories)
