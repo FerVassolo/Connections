@@ -209,7 +209,7 @@ fun WordButton(text: String, isSelected: Boolean, onWordClicked: (String) -> Uni
         if (text.length > 7) {
             Text(
                 text = text,
-                color = if (isSelected) Color.White else Color.Black,
+                color = if (isSelected) White else Black,
                 fontSize = (increasedWordButton - text.length).sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 2,
@@ -219,7 +219,7 @@ fun WordButton(text: String, isSelected: Boolean, onWordClicked: (String) -> Uni
             Text(
                 text = text,
                 fontSize = wordButton,
-                color = if (isSelected) Color.White else Color.Black,
+                color = if (isSelected) White else Black,
                 fontWeight = FontWeight.Bold
             )
         }
