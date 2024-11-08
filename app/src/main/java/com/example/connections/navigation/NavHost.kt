@@ -12,7 +12,6 @@ import com.example.connections.game.LoadGame
 import com.example.connections.history.GameHistoryViewModel
 import com.example.connections.home.Home
 import com.example.connections.history.History
-import com.example.connections.security.BiometricStart
 
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
@@ -20,14 +19,14 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
     var game = -1
     NavHost(
         navController = navController,
-        startDestination = ConnectionsScreen.Security.name,
+        startDestination = ConnectionsScreen.Home.name,
         modifier = Modifier.padding(innerPadding)
     ) {
-        composable(route = ConnectionsScreen.Security.name) {
+/*        composable(route = ConnectionsScreen.Security.name) {
             BiometricStart(onNavigateToHome = {
                 navController.navigate(ConnectionsScreen.Home.name)
             })
-        }
+        }*/
         composable(route = ConnectionsScreen.Home.name) {
             Home(
                 onNavigateToGame = {

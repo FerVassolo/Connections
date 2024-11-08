@@ -14,8 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 
+// DEPRECATED
 @Composable
-fun BiometricStart(onNavigateToHome: () -> Unit){
+fun BiometricStart(onNavigateToHome: @Composable () -> Unit){
     val context = LocalContext.current
     val viewModel = hiltViewModel<SecurityViewModel, SecurityViewModel.SecurityViewModelFactory> { factory ->
         factory.create(context)
