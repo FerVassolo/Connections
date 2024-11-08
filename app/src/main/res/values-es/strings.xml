@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name" translatable="false">Connections</string>
+    <string name="creator">por Fer</string>
+    <string name="retry_load_ranking">No se puede cargar la clasificación, inténtalo de nuevo más tarde</string>
+    <string name="set_user_name">Establece tu nombre de usuario</string>
+    <string name="save">Guardar</string>
+    <string name="greetings">Hola,\u00A0</string>
+    <string name="sample_name">Juan Verón</string>
+
+    <!--GAME-->
+    <string name="play_button">Jugar</string>
+    <string name="instruction">¡Crea cuatro grupos de cuatro!</string>
+    <string name="attempts">Intentos restantes:\u00A0</string>
+    <string name="cant_load_words">No se pudieron cargar las palabras</string>
+    <string name="retry">Reintentar</string>
+    <string name="shuffle">Barajar</string>
+    <string name="deselect">Deseleccionar todo</string>
+    <string name="submit">Intentar</string>
+    <string name="game_over">Has perdido, ¡más suerte la próxima vez!</string>
+    <string name="winner_message">¡Ganaste!</string>
+
+    <!--HISTORY-->
+    <string name="played">Jugado</string>
+    <string name="not_played">No jugado</string>
+    <string name="game">Juego\u00A0</string>
+
+    <!--API SERVICE-->
+    <string name="getting_error">Error trayendo las palabras</string>
+
+    <!--MAIN ACTIVITY-->
+    <string name="unavailable_bio">Hardware biométrico no disponible</string>
+    <string name="unable_to_process">No se pudo procesar la huella</string>
+    <string name="timeout">Tiempo de espera agotado</string>
+    <string name="lockout">Demasiados intentos, inténtalo más tarde</string>
+    <string name="auth_cancelled">Autenticación cancelada</string>
+    <string name="user_cancelled">Has cancelado la autenticación</string>
+    <string name="unknown_error">Error desconocido: </string>
+    <string name="failed_toast">Autenticación fallida, intenta nuevamente</string>
+    <string name="bio_auth">Autenticación Biométrica</string>
+    <string name="use_bio">Inicia sesión usando tu huella o credenciales</string>
+    <string name="cancel">Cancelar</string>
+    <string name="bio_catch">No se pudo inicializar la autenticación biométrica</string>
+    <string name="please_auth">Por favor, autentícate para continuar</string>
+    <string name="retry_auth">Reintentar autenticación</string>
+    <string name="user_name">Nombre de usuario</string>
+
+
+</resources>
